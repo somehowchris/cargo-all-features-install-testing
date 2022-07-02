@@ -19,4 +19,11 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
           components: rustfmt, clippy
-      - run: cargo install ${{ matrix.crate }}
+      - run: |
+          start=`date +%s`
+          cargo install ${{ matrix.crate }}
+          end=`date +%s`
+
+          runtime=$((end-start))
+
+          echo "::set-output name=${{ matrix.os }},${{ matrix.rust }},${{ matrix.crate }},${{ matrix.run }},$runtime"
